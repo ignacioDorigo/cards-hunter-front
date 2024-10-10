@@ -5,13 +5,25 @@ import { Avatar, Button, Icon, ListItem } from "@rneui/themed";
 import { styles } from "./AccountScreen.styles";
 import { AuthContext } from "../../../../context/AuthContext";
 import axios from "axios";
+import { ChangeNameForm } from "../../../../components/ChangeNameForm";
 
 export function AccountScreen() {
   const [perfil, setPerfil] = useState(null);
+  const [reload, setReload] = useState(false);
+
+  const [modalNombre, setModalNombre] = useState(false);
+
+  const mostrarOcultarModalNombre = () => {
+    setModalNombre((prevState) => !prevState);
+  };
+
+  const refrescarScreen = () => {
+    setReload((prevState) => !prevState);
+  };
 
   useEffect(() => {
     buscarPerfil();
-  }, []);
+  }, [reload]);
 
   const buscarPerfil = async () => {
     try {
@@ -43,7 +55,7 @@ export function AccountScreen() {
       title: "Cambiar Nombre",
       rightIcon: "card-account-details-outline",
       funcion: () => {
-        console.log("Cambiar Nombre");
+        setModalNombre(true);
       },
     },
     {
@@ -108,6 +120,11 @@ export function AccountScreen() {
         onPress={logout}
         containerStyle={styles.btnContainer}
       />
+      <ChangeNameForm
+        visible={modalNombre}
+        ocultarModal={mostrarOcultarModalNombre}
+        refrescarScreen={refrescarScreen}
+      ></ChangeNameForm>
     </View>
   );
 }
