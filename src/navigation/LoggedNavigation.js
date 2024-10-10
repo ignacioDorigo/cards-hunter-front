@@ -11,6 +11,7 @@ import { SearchStack } from "./SearchStack";
 import { AccountStack } from "./AccountStack";
 
 export function LoggedNavigation() {
+    
   const Tab = createBottomTabNavigator();
 
   return (

@@ -11,7 +11,7 @@ export function AccountStack() {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator initialRouteName={screen.account.account}>
-      <Stack.Screen name={screen.account.account} component={AccountScreen} />
+      <Stack.Screen name={screen.account.account} component={AccountScreen} options={{title:'Cuenta'}} />
     </Stack.Navigator>
   );
 }

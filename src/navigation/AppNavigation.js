@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import React from "react";
+import React, { useContext } from "react";
 import { Text } from "react-native";
 
 // Import guest y logged stack
@@ -7,12 +7,15 @@ import { LoggedNavigation } from "./LoggedNavigation";
 import { GuestNavigation } from "./GuestNavigation";
 
 // Import del context
-import { AuthContext, AuthProvider } from "../context/AuthContext"
+import { AuthContext } from "../context/AuthContext";
 
 export function AppNavigation() {
+  const { uuid } = useContext(AuthContext);
+  console.log(uuid);
+
   return (
     <NavigationContainer>
-      <LoggedNavigation></LoggedNavigation>
+        {uuid?<LoggedNavigation></LoggedNavigation>:<GuestNavigation></GuestNavigation>}
     </NavigationContainer>
   );
 }

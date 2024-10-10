@@ -11,10 +11,10 @@ import {CollectionScreen} from '../screens/Logged/Collection'
 export function CollectionStack() {
 
     const Stack = createNativeStackNavigator();
-    
+
     return (
       <Stack.Navigator initialRouteName={screen.collection.collection}>
-       <Stack.Screen name={screen.collection.collection} component={CollectionScreen}/>
+       <Stack.Screen name={screen.collection.collection} component={CollectionScreen} options={{title:'Coleccion'}}/>
       </Stack.Navigator>
     );
 }
