@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { styles } from "./RegisterScreen.styles";
 
-export default function RegisterScreen() {
+export function RegisterScreen() {
   return (
     <View>
       <Text>RegisterScreen</Text>
