@@ -6,15 +6,20 @@ import { styles } from "./AccountScreen.styles";
 import { AuthContext } from "../../../../context/AuthContext";
 import axios from "axios";
 import { ChangeNameForm } from "../../../../components/ChangeNameForm";
+import { ChangeSurnameForm } from "../../../../components/ChangeSurnameForm";
 
 export function AccountScreen() {
   const [perfil, setPerfil] = useState(null);
   const [reload, setReload] = useState(false);
 
   const [modalNombre, setModalNombre] = useState(false);
+  const [modalApellido, setModalApellido] = useState(false);
 
   const mostrarOcultarModalNombre = () => {
     setModalNombre((prevState) => !prevState);
+  };
+  const mostrarOcultarModalApellido = () => {
+    setModalApellido((prevState) => !prevState);
   };
 
   const refrescarScreen = () => {
@@ -62,7 +67,7 @@ export function AccountScreen() {
       title: "Cambiar Apellido",
       rightIcon: "card-account-details-outline",
       funcion: () => {
-        console.log("Cambiar Apellido");
+        setModalApellido(true);
       },
     },
   ];
@@ -125,6 +130,12 @@ export function AccountScreen() {
         ocultarModal={mostrarOcultarModalNombre}
         refrescarScreen={refrescarScreen}
       ></ChangeNameForm>
+
+      <ChangeSurnameForm
+        visible={modalApellido}
+        ocultarModal={mostrarOcultarModalApellido}
+        refrescarScreen={refrescarScreen}
+      ></ChangeSurnameForm>
     </View>
   );
 }

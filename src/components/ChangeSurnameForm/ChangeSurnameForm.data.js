@@ -6,7 +6,7 @@ export function initialValues() {
   };
 }
 
-export function initialValues() {
+export function validationSchema() {
   return Yup.object({
     surname: Yup.string().required("El Apellido es obligatorio"),
   });
