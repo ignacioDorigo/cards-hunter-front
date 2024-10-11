@@ -5,21 +5,34 @@ import { Avatar, Button, Icon, ListItem } from "@rneui/themed";
 import { styles } from "./AccountScreen.styles";
 import { AuthContext } from "../../../../context/AuthContext";
 import axios from "axios";
+
+// Forms
 import { ChangeNameForm } from "../../../../components/ChangeNameForm";
 import { ChangeSurnameForm } from "../../../../components/ChangeSurnameForm";
+import { ChangeEmailForm } from "../../../../components/ChangeEmailForm/ChangeEmailForm";
+import { ChangePasswordForm } from "../../../../components/ChangePasswordForm/ChangePasswordForm";
 
 export function AccountScreen() {
   const [perfil, setPerfil] = useState(null);
   const [reload, setReload] = useState(false);
 
+  const [modalEmail, setModalEmail] = useState(false);
+  const [modalPassword, setModalPassword] = useState(false);
   const [modalNombre, setModalNombre] = useState(false);
   const [modalApellido, setModalApellido] = useState(false);
 
   const mostrarOcultarModalNombre = () => {
     setModalNombre((prevState) => !prevState);
   };
+  const mostrarOcultarModalPassword = () => {
+    setModalPassword((prevState) => !prevState);
+  };
   const mostrarOcultarModalApellido = () => {
     setModalApellido((prevState) => !prevState);
+  };
+
+  const mostrarOcultarModalEmail = () => {
+    setModalEmail((prevState) => !prevState);
   };
 
   const refrescarScreen = () => {
@@ -46,14 +59,14 @@ export function AccountScreen() {
       title: "Cambiar Email",
       rightIcon: "at",
       funcion: () => {
-        console.log("Cambiar Email");
+        setModalEmail(true);
       },
     },
     {
       title: "Cambiar Password",
       rightIcon: "lock-outline",
       funcion: () => {
-        console.log("Cambiar Password");
+        setModalPassword(true);
       },
     },
     {
@@ -125,12 +138,29 @@ export function AccountScreen() {
         onPress={logout}
         containerStyle={styles.btnContainer}
       />
+
+      {/* Email */}
+      <ChangeEmailForm
+        visible={modalEmail}
+        ocultarModal={mostrarOcultarModalEmail}
+        refrescarScreen={refrescarScreen}
+      ></ChangeEmailForm>
+
+      {/* Password */}
+      <ChangePasswordForm
+        visible={modalPassword}
+        ocultarModal={mostrarOcultarModalPassword}
+        refrescarScreen={refrescarScreen}
+      ></ChangePasswordForm>
+
+      {/* Nombre */}
       <ChangeNameForm
         visible={modalNombre}
         ocultarModal={mostrarOcultarModalNombre}
         refrescarScreen={refrescarScreen}
       ></ChangeNameForm>
 
+      {/* Apelldio  */}
       <ChangeSurnameForm
         visible={modalApellido}
         ocultarModal={mostrarOcultarModalApellido}
