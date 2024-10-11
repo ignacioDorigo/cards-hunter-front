@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 
 import { Avatar, Button, Icon, ListItem } from "@rneui/themed";
@@ -16,6 +16,8 @@ import { ChangePasswordForm } from "../../../../components/ChangePasswordForm/Ch
 export function AccountScreen() {
   const [perfil, setPerfil] = useState(null);
   const [reload, setReload] = useState(false);
+  const [avatarUri, setAvatarUri] = useState(null);
+
 
   const [modalEmail, setModalEmail] = useState(false);
   const [modalPassword, setModalPassword] = useState(false);
@@ -96,8 +98,31 @@ export function AccountScreen() {
     });
 
     if (!photo.canceled) {
-      // Falta subir foto
-      console.log(photo.assets[0]);
+      const uri = photo.assets[0].uri;
+      const imagen = await fetch(uri);
+      const imagenBlob = await imagen.blob();
+
+      let formData = new FormData();
+      formData.append("uuid", uuid); // Asegúrate de pasar el uuid correcto
+      formData.append("imagen", {
+        uri: uri,
+        type: "image/jpeg", // Cambia según el tipo de imagen
+        name: "avatar.jpg", // Nombre del archivo
+      });
+      try {
+        const response = await axios.post(
+          "http://192.168.1.14:8080/api/avatars/uploadAvatar",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        Alert.alert("Exito", response.data);
+      } catch (error) {
+        Alert.alert("Error", error);
+      }
     } else {
       console.log("Operacion cancelada");
     }
@@ -110,6 +135,7 @@ export function AccountScreen() {
           containerStyle={styles.avatarContainer}
           size={"large"}
           icon={{ type: "material", name: "person", color: "#FFF" }}
+        
         >
           <Avatar.Accessory size={24} color="#240046" onPress={changeAvatar} />
         </Avatar>
