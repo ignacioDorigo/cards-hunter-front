@@ -5,6 +5,7 @@ import { Avatar, Button, Icon, ListItem } from "@rneui/themed";
 import { styles } from "./AccountScreen.styles";
 import { AuthContext } from "../../../../context/AuthContext";
 import axios from "axios";
+import * as ImagePicker from "expo-image-picker";
 
 // Forms
 import { ChangeNameForm } from "../../../../components/ChangeNameForm";
@@ -87,8 +88,19 @@ export function AccountScreen() {
   // Uso del contexto
   const { uuid, logout } = useContext(AuthContext);
 
-  const changeAvatar = () => {
-    console.log("Cambiando avatar al uuid: " + uuid);
+  const changeAvatar = async () => {
+    const photo = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    if (!photo.canceled) {
+      // Falta subir foto
+      console.log(photo.assets[0]);
+    } else {
+      console.log("Operacion cancelada");
+    }
   };
   return (
     <View style={styles.container}>
